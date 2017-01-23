@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/facebook_friend"
+    android:background="#AACCFF">
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fb_friends_list_name"
+        android:text="i m name"
+        android:layout_alignParentRight="true"
+        android:textSize="45dp"/>
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fb_friends_list_id"
+        android:text="i m id"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/fb_friends_list_picture"/>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fb_friends_list_picture"
+        android:background="@mipmap/ic_launcher"/>
+
+</RelativeLayout>

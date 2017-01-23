@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.jhonsmith.www.projectdiva.MainActivity"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="facebook login"
+        android:id="@+id/facebook_login_button"
+        android:onClick="cokcok"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/facebook_content_linearlayout"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:id="@+id/facebook_me_likeview"
+                android:text="facebook good"
+                android:onClick="cokcok"
+                android:layout_marginRight="5dp"/>
+            <com.facebook.share.widget.LikeView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/facebook_likeview"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:onClick="cokcok"
+            android:text="facebook game request"
+            android:id="@+id/facebook_gamerequest_button"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="facebook app invite"
+            android:id="@+id/facebook_appinvite_button"
+            android:onClick="cokcok"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/facebook_linkshare_button"
+            android:text="facebook link share"
+            android:onClick="cokcok"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/facebook_objectshare_button"
+            android:text="facebook object share"
+            android:onClick="cokcok"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="facebook screen shot share"
+            android:onClick="cokcok"
+            android:id="@+id/facebook_screenshot_share_button"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="facebook in app friends"
+            android:onClick="cokcok"
+            android:id="@+id/facebook_inapp_friends_button" />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/test_imageview"
+            android:src="@mipmap/ic_launcher"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/facbeookfriends_linear"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/return_button"
+            android:text="return"
+            android:onClick="cokcok"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:id="@+id/facebook_friends_listview"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="send invite"
+            android:onClick="cokcok"
+            android:id="@+id/gamerequest_send_button"/>
+
+    </LinearLayout>
+</RelativeLayout>
