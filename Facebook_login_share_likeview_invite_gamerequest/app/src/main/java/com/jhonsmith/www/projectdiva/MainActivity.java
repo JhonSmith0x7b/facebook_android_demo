@@ -77,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
     List<Map<String, String>> m_fb_friendslist;                 //好友数据
     String m_facbeook_object = "";               //facebook object id
     List<String> m_temp_string_list;
+
     enum Fb_logintype {          // facebook login type sign
-        LOGIN, SHARE, REQUEST
+        LOGIN, SHARE, REQUEST, OBJECT
     }
 
     enum Fb_sharetype {             //facebook share api type
@@ -123,6 +124,11 @@ public class MainActivity extends AppCompatActivity {
                     case REQUEST: {
                         LOGD("facebook login via graph request " + loginResult.getAccessToken(), m_context);
                         get_inapp_friends();
+                        break;
+                    }
+                    case OBJECT:{
+                        LOGD("facebook login via create object " + loginResult.getAccessToken(), m_context);
+                        get_facebook_product_object();
                         break;
                     }
                     default:
@@ -311,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                             ids.add(map.get("id"));
                         }
                     }
-                    if(ids.size() >= 0){
+                    if (ids.size() >= 0) {
                         /*
                         GameRequestContent turn_content = new GameRequestContent.Builder()              //应用邀请, action type TRURN 不需要新建object, 其他两种需要新建Object
                                 .setMessage("facebook turn action invite")
@@ -325,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 String object_id = get_facebook_product_object();
-                                if(!object_id.equals("")){
+                                if (!object_id.equals("")) {
                                     GameRequestContent askfor_or_sendto_content = new GameRequestContent.Builder()
                                             .setMessage("facebook askfor or sendto action invite")
                                             .setRecipients(m_temp_string_list)
@@ -344,29 +350,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String get_facebook_product_object(){
-        if(m_facbeook_object.equals("")){
-            Bundle params = new Bundle();           //目前facbeook 不支持自定义object, 只能使用 facebook    官方提供的object, 以下以product为例, 发出去会显示
-            params.putString("object", "{'og':{'type':'product','title':'life'}}");             //https://developers.facebook.com/docs/reference/opengraph/object-type/product/
-            GraphRequest request = new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "me/objects/product",
-                    params,
-                    HttpMethod.POST,
-                    new GraphRequest.Callback() {
-                        @Override
-                        public void onCompleted(GraphResponse response) {
-                            try{
-                                JSONObject jo = response.getJSONObject();
-                                m_facbeook_object = jo.getString("id");
-                            }catch(Exception e){
-                                LOGD("create object error " + e.getMessage(), null);
-                                m_facbeook_object = "";
+    private String get_facebook_product_object() {
+        if (AccessToken.getCurrentAccessToken() == null || !AccessToken.getCurrentAccessToken().getPermissions().contains("publish_actions")) {   //分享之前要先判断用户有没有publish_actions权限
+            m_fb_logintype = Fb_logintype.OBJECT;
+            LoginManager.getInstance().logInWithPublishPermissions(m_activity, Arrays.asList("publish_actions"));
+        } else {
+            if (m_facbeook_object.equals("")) {
+                Bundle params = new Bundle();           //目前facbeook 不支持自定义object, 只能使用 facebook    官方提供的object, 以下以product为例, 发出去会显示
+                params.putString("object", "{'og':{'type':'product','title':'life'}}");             //https://developers.facebook.com/docs/reference/opengraph/object-type/product/
+                GraphRequest request = new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "me/objects/product",
+                        params,
+                        HttpMethod.POST,
+                        new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                try {
+                                    JSONObject jo = response.getJSONObject();
+                                    m_facbeook_object = jo.getString("id");
+                                } catch (Exception e) {
+                                    LOGD("create object error " + e.getMessage(), null);
+                                    m_facbeook_object = "";
+                                }
                             }
                         }
-                    }
-            );
-            request.executeAndWait();
+                );
+                request.executeAndWait();
+            }
         }
         return m_facbeook_object;
     }
