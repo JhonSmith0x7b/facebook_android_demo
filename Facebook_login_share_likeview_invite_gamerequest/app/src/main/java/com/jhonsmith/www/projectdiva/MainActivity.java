@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -155,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
+                if(error instanceof FacebookAuthorizationException){                //手机切换facebook账号 清除登陆token
+                    if (AccessToken.getCurrentAccessToken() != null) {
+                        LoginManager.getInstance().logOut();
+                    }
+                }
                 switch (m_fb_logintype) {
                     case LOGIN: {
                         LOGD("facebook login error " + error.getMessage(), m_context);
